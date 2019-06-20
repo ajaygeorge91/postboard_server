@@ -1,0 +1,108 @@
+@import utils.Constants
+@(title: String, user: Option[User], notList: List[UserNotification], userProfile: User)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+    <!-- User scripts -->
+
+
+} {
+
+
+    <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(user)
+
+        @partials._titleHeader(user, userProfile.fullName.getOrElse(""))
+
+
+            <!-- Page container -->
+        <div class="page-container custom_page_container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+
+                        <!-- User profile -->
+                    <div class="row">
+
+                        <div class="col-lg-7">
+                            <div class="panel panel-flat custom_panel">
+
+                                <div class="panel-heading ">
+                                    <h6 class="panel-title text-semibold">Notifications</h6>
+
+                                </div>
+
+                                <div class="panel-body no-padding">
+
+                                    <div id="notificationList">
+
+                                        <ul class="media-list media-list-linked media-list-bordered">
+                                        @notList.map { n =>
+
+                                            <li class="media">
+
+                                                <a href="@n.link.getOrElse("")" class="media-link">
+                                                    @n.imageThumb.map { i =>
+                                                        <div class="media-left">
+                                                            <img src="@i" class="img-circle img-md" alt="">
+                                                        </div>
+                                                    }
+                                                    <div class="media-body">
+                                                        <div class="media-content text-bold " >@n.content.getOrElse("") </div>
+                                                        <div class="media-annotation .text-muted">@utils.WebUtils.getDisplayTimeOffset(n.createdAt)</div>
+                                                        @n.subContent.map { s =>
+                                                            <div class="media-content .text-muted max_lines_2">@s</div>
+                                                        }
+
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-5">
+
+
+                        @partials._profileNav(user, userProfile)
+
+
+                        </div>
+                    </div>
+                        <!-- /user profile -->
+
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+
+        @partials._footer(user)
+
+
+    </body>
+
+
+}

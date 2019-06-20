@@ -1,0 +1,100 @@
+@(title: String, user: Option[User], userProfile: User, paginatedResult: PaginatedResult[Article])(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+
+    <meta name="description" content=@userProfile.fullName.getOrElse("")>
+    <meta property='og:type' content='profile' />
+    <meta property="profile:first_name " content="@userProfile.fullName.getOrElse("")" />
+    <meta property="profile:last_name" content="" />
+    <meta property="profile:username " content="@userProfile.id" />
+
+        <!-- User scripts -->
+
+
+} {
+
+
+    <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(user)
+
+        @partials._titleHeader(user, userProfile.fullName.getOrElse(""))
+
+
+            <!-- Page container -->
+        <div class="page-container custom_page_container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+
+                        <!-- User profile -->
+                    <div class="row">
+                        <div class="col-lg-7  col-md-8">
+                            <div class="tabbable">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active">
+
+
+                                        @user.map { u =>
+                                            @if(u.id.equalsIgnoreCase(userProfile.id)) {
+
+                                                @partials._add_post_link(user)
+
+                                            }
+                                        }
+
+
+
+                                        <div id="contentList">
+
+                                        @articles._articleList(user, paginatedResult)
+
+                                        </div>
+
+                                        @articles._userArticleShowMore(user, paginatedResult, userProfile)
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-5  col-md-4">
+
+
+                        @partials._profileNav(user, userProfile)
+
+
+                        </div>
+                    </div>
+                        <!-- /user profile -->
+
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+
+        @partials._footer(user)
+
+
+    </body>
+
+
+}

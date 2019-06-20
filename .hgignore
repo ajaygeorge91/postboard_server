@@ -1,0 +1,6 @@
+syntax: glob
+.idea
+project/project/target
+project/target
+target
+*.iml

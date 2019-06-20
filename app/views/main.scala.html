@@ -1,0 +1,56 @@
+@(title: String)(jsContent: Html)(content: Html)(implicit request: RequestHeader)
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="fb:app_id" content='@utils.Constants.FB_APP_ID' />
+        <meta property='og:site_name' content='@utils.Constants.DOMAIN' />
+        <meta property="og:url" content='@utils.Constants.DOMAIN.concat(request.path)' />
+        <meta property="al:android:app_name" content='@utils.Constants.APP_NAME' />
+        <meta property="al:android:package" content='@utils.Constants.APP_ANDROID_PACKAGE' />
+        <meta property="al:android:url" content='@utils.Constants.DOMAIN.concat(request.path)' />
+
+
+        <title>@title</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+
+            <!-- Global stylesheets -->
+        <link href="@routes.Assets.versioned("css/icons/icomoon/styles.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.versioned("css/bootstrap.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.versioned("css/core.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.versioned("css/components.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.versioned("css/colors.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.versioned("css/main.css")" rel="stylesheet" type="text/css">
+        @*<link href="@routes.Assets.versioned("css/compressed/compressed.css")" rel="stylesheet" type="text/css">*@
+            <!-- /global stylesheets -->
+
+            <!-- Core JS files -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amplifyjs/1.1.2/amplify.min.js"></script>
+            <!-- /core JS files -->
+
+            <!-- App JS files -->
+        @*<script type="text/javascript" src="@routes.Assets.versioned("js/compressed/compressed.js")"></script>*@
+        <script type="text/javascript" src="@routes.Assets.versioned("js/core/app.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("js/core/requests.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("js/core/articleActions.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("js/core/analytics.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("js/core/createNew.js")"></script>
+            <!-- /app JS files -->
+
+        @jsContent
+
+    </head>
+
+    @content
+
+</html>

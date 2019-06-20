@@ -1,0 +1,99 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+
+GET         /                                                              controllers.ApplicationController.index
+GET         /auth/signIn                                                   controllers.ApplicationController.signIn
+GET         /auth/signOut                                                  controllers.ApplicationController.signOut
+
+GET         /auth/:provider                                                controllers.SocialAuthController.authenticate(provider)
+POST        /auth/signUp                                                   controllers.SignUpController.signUp
+POST        /auth/credentials                                              controllers.CredentialsAuthController.authenticate
+
+GET         /admin                                                         controllers.AdminController.admin
+POST        /admin/rss                                                     controllers.AdminController.rssPost
+GET         /tc/privacy                                                    controllers.ApplicationController.privacy
+GET         /admin/websocket/dashboard                                     controllers.ApplicationController.dashBoardSocket
+
+GET         /user/:userId                                                  controllers.UserController.profile(userId:String)
+GET         /user/:userId/activity                                         controllers.UserController.activity(userId:String)
+GET         /user/:userId/notifications                                    controllers.UserController.notifications(userId:String)
+GET         /user/:userId/notifications/:id                                controllers.UserController.getArticleFromNotificationsID(userId:String,id:String)
+GET         /user/:userId/settings                                         controllers.UserController.settings(userId:String)
+
+GET         /posts/new                                                     controllers.ArticleController.createNew
+GET         /posts/:id                                                     controllers.ArticleController.details(id:String,highlightedComment:Option[String])
+GET         /posts                                                         controllers.ArticleController.list(pageNumber: Option[Int], numberOfRecords: Option[Int])
+POST        /posts                                                         controllers.ArticleController.create
+POST        /posts/link                                                    controllers.ArticleController.createFromLink
+
+POST        /ajax/posts/reaction                                           controllers.AjaxController.addArticleReaction()
+
+POST        /ajax/comments                                                 controllers.AjaxController.addComment()
+PUT         /ajax/comments                                                 controllers.AjaxController.editComment()
+POST        /ajax/comments/reaction                                        controllers.AjaxController.addCommentReaction()
+GET         /ajax/posts/hot/:pageNumber                                    controllers.AjaxController.getHotArticles(pageNumber: Int)
+GET         /ajax/posts/new/:pageNumber                                    controllers.AjaxController.getNewArticles(pageNumber: Int)
+GET         /ajax/posts/:postID/comments/hot/:pageNumber                   controllers.AjaxController.getHotComments(postID:String, pageNumber: Int)
+GET         /ajax/posts/:postID/comments/new/:pageNumber                   controllers.AjaxController.getNewComments(postID:String, pageNumber: Int)
+GET         /ajax/posts/:postID/comments/:commentID/subComments/hot        controllers.AjaxController.getHotSubComments(postID:String, commentID: String)
+GET         /ajax/user/:userId/posts/new/:pageNumber                       controllers.AjaxController.getNewArticlesFromUser(userId:String, pageNumber: Int)
+GET         /ajax/notification/clickaction                                 controllers.AjaxController.notificationClickAction()
+
+
+POST        /ajax/subComments                                              controllers.AjaxController.addSubComment()
+
+
+
+
+#APIs
+
+POST        /api/auth/credentials                                          controllers.api.CredentialsAuthController.authenticate
+POST        /api/auth/signUp                                               controllers.api.SignUpController.signUp
+POST        /api/auth/facebook                                             controllers.api.SocialAuthController.authenticateFB()
+POST        /api/auth/:provider                                            controllers.api.SocialAuthController.authenticate(provider :String)
+
+GET         /api/user                                                      controllers.api.ApplicationController.user
+GET         /api/user/opt                                                  controllers.api.ApplicationController.userOpt
+GET         /api/user/posts                                                controllers.api.UserController.getArticlesFromLoggedInUser(pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/user/activity                                             controllers.api.UserController.getUserActivity(pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/user/notifications                                        controllers.api.UserController.getUserNotifications(pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/user/notifications/clickaction                            controllers.api.UserController.notificationClickAction()
+GET         /api/user/:id                                                  controllers.api.UserController.getFromId(id:String)
+GET         /api/user/:id/profile                                          controllers.api.UserController.getProfileBundleFromUserId(id:String,pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/user/:id/posts                                            controllers.api.UserController.getUserArticles(id:String,pageNumber: Option[Int], numberOfRecords: Option[Int])
+
+GET         /api/node/:nodeID                                              controllers.api.ArticleController.getArticleFromNodeID(nodeID:String)
+
+GET         /api/posts/q/:searchQuery                                      controllers.api.SearchController.getArticleSearchResults(searchQuery:String,pageNumber: Option[Int], numberOfRecords: Option[Int])
+
+POST        /api/posts                                                     controllers.api.ArticleController.createArticle()
+GET         /api/posts                                                     controllers.api.ArticleController.list(pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/posts/hot                                                 controllers.api.ArticleController.getHotArticles(pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/posts/new                                                 controllers.api.ArticleController.getNewArticles(pageNumber: Option[Int], numberOfRecords: Option[Int])
+
+GET         /api/posts/:postID                                             controllers.api.ArticleController.details(postID:String)
+
+GET         /api/posts/hot/reaction/:page                                  controllers.api.ArticleController.getHotArticleReactionForFirstNPages(page:Int)
+GET         /api/posts/new/reaction/:page                                  controllers.api.ArticleController.getNewArticleReactionForFirstNPages(page:Int)
+GET         /api/posts/:postID/reaction                                    controllers.api.ArticleController.getArticleReaction(postID:String)
+POST        /api/posts/:postID/reaction                                    controllers.api.ArticleController.addArticleReaction(postID:String)
+
+POST        /api/posts/:postID/comments                                    controllers.api.CommentController.addComment(postID:String)
+PUT         /api/posts/:postID/comments                                    controllers.api.CommentController.editComment(postID:String)
+
+POST        /api/posts/:postID/comments/:commentId/reaction                controllers.api.CommentController.addCommentReaction(postID:String,commentId:String)
+
+GET         /api/posts/:postID/comments/hot                                controllers.api.CommentController.getHotComments(postID:String, pageNumber: Option[Int], numberOfRecords: Option[Int])
+GET         /api/posts/:postID/comments/new                                controllers.api.CommentController.getNewComments(postID:String, pageNumber: Option[Int], numberOfRecords: Option[Int])
+
+POST        /api/posts/:postID/comments/:commentID/subComments             controllers.api.CommentController.addSubComment(postID:String, commentID: String)
+PUT         /api/posts/:postID/comments/:commentID/subComments             controllers.api.CommentController.editSubComment(postID:String, commentID: String)
+
+GET         /api/posts/:postID/comments/:commentID/subComments/hot         controllers.api.CommentController.getHotSubComments(postID:String, commentID: String, pageNumber: Option[Int], numberOfRecords: Option[Int])
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /res/*file                                                     controllers.Assets.versioned(path="/public", file: Asset)

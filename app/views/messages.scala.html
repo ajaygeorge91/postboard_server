@@ -1,0 +1,69 @@
+@(title: String, user: Option[User], errorMessage: String)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+    <!-- User scripts -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="@routes.Assets.versioned("js/plugins/tables/datatables/datatables.min.js")"></script>
+        <!-- /theme JS files -->
+
+
+} {
+
+
+    <body class="navbar-bottom" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(user)
+
+            <!-- Page header -->
+        <div class="page-header">
+
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-home"></i> <span class="text-semibold">Error</span> </h4>
+                </div>
+
+            </div>
+        </div>
+            <!-- /page header -->
+
+
+            <!-- Page container -->
+        <div class="page-container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+                        <!-- Simple panel -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">@errorMessage</h5>
+                        </div>
+
+                    </div>
+                        <!-- /simple panel -->
+
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+        @partials._footer(user)
+
+    </body>
+
+
+}

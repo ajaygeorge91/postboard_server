@@ -1,0 +1,41 @@
+@(user: Option[User], userProfile: User)(implicit request: RequestHeader, messages: Messages)
+
+<div class="panel panel-body custom_panel">
+    <div class="text-center">
+        <a href="#" class="display-inline-block">
+            <img src="@userProfile.avatarURL.getOrElse(utils.Constants.DEFAULT_AVATAR)" class="img-circle img-responsive" alt="" style="width: 120px;
+                height: 120px;">
+        </a>
+
+        <h6 class="text-semibold cent">
+            <p class="text-default">@userProfile.fullName.getOrElse("")</p>
+        </h6>
+
+    </div>
+
+    <div class="list-group no-border ">
+
+        <a href="@controllers.routes.UserController.profile(userProfile.id).toString" class="list-group-item @{
+            if(request.path == controllers.routes.UserController.profile(userProfile.id).toString) "active" else ""
+        }"><i class="icon-images2"></i>
+            Posts
+        </a>
+
+        @user.map { u =>
+
+            @if(u.id.equals(userProfile.id)) {
+
+                <a href="@controllers.routes.UserController.notifications(userProfile.id).toString" class="list-group-item @{
+                    if(request.path == controllers.routes.UserController.notifications(userProfile.id).toString) "active" else ""
+                }"><i class="icon-list"></i>
+                    Notifications
+                </a>
+
+            }
+        }
+
+    </div>
+
+</div>
+
+

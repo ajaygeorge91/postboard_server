@@ -1,0 +1,14 @@
+@(userDTO: Option[User], paginatedResult: PaginatedResult[Article], userProfile: User)(implicit request: RequestHeader, messages: Messages)
+
+
+<div class="text-center show_more_articles">
+    <div class="panel-body">
+        <input type="hidden" id="@paginatedResult.orderBy.concat("ArticlesPageNumber")" value="@paginatedResult.pageNumber" />
+        <input type="hidden" id="otherUserProfileID" value="@userProfile.id" />
+
+        <button type="button" id="@paginatedResult.orderBy.concat("ShowMoreUserArticles")" class="btn btn-default btn-ladda btn-ladda-spinner" data-spinner-color="#333" data-style="slide-up"><span class="ladda-label">
+            Show more</span>
+        </button>
+
+    </div>
+</div>

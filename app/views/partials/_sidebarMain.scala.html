@@ -1,0 +1,43 @@
+@()(implicit request: RequestHeader, messages: Messages)
+
+<!-- Main sidebar -->
+<div class="sidebar sidebar-main sidebar-default">
+    <div class="sidebar-content">
+
+            <!-- Main navigation -->
+        <div class="sidebar-category sidebar-category-visible">
+
+            <div class="category-content no-padding">
+                <ul class="navigation navigation-main navigation-accordion">
+
+                        <!-- Main -->
+                    <li class="navigation-header"><span>MAIN</span> <i class="icon-menu" title="MAIN"></i></li>
+
+                    <li class=@{
+                        if(request.path == controllers.routes.ApplicationController.index().toString) "active" else ""
+                    }>
+                        <a href="@controllers.routes.ApplicationController.index()">
+                            <i class="icon-stats-growth2"></i> <span>Trending</span>
+                        </a>
+                    </li>
+                    <li class=@{
+                        if(request.path == controllers.routes.ArticleController.list(None, None).toString) "active" else ""
+                    }>
+                        <a href="@controllers.routes.ArticleController.list(None, None)">
+                            <i class="icon-new"></i> <span>New</span>
+                        </a>
+                    </li>
+
+
+                        <!-- /main -->
+
+                </ul>
+            </div>
+        </div>
+            <!-- /main navigation -->
+
+    </div>
+</div>
+    <!-- /main sidebar -->
+
+

@@ -1,0 +1,93 @@
+@(title: String, user: Option[User])(implicit request: RequestHeader, messages: Messages)
+
+    @import helper._
+
+    @main(title) {
+        <!-- User scripts -->
+
+
+    } {
+
+
+        <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+            @partials._navbarMain(user)
+
+                <!-- Page header -->
+            <div class="page-header">
+
+
+                    <!-- Inside page title -->
+                <div class="content-group border-top-lg border-top-primary">
+                    <div class="page-header page-header-default" style="border-left: 1px solid #ddd ; border-right: 1px solid #ddd ;">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h5>
+                                    <i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Header</span>
+                                    - Breadcrumb
+                                    <small class="display-block">Basic breadcrumb inside page header</small>
+                                </h5>
+                            </div>
+
+                            <div class="heading-elements">
+                                <form class="heading-form" action="#">
+                                    <div class="form-group">
+                                        <div class="has-feedback">
+                                            <input type="search" class="form-control" placeholder="Search">
+                                            <div class="form-control-feedback">
+                                                <i class="icon-search4 text-size-small text-muted"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                    <!-- /inside page title -->
+
+            </div>
+                <!-- /page header -->
+
+
+                <!-- Page container -->
+            <div class="page-container custom_page_container">
+
+                    <!-- Page content -->
+                <div class="page-content">
+
+                    @partials._sidebarMain()
+
+
+                        <!-- Main content -->
+                    <div class="content-wrapper">
+
+                            <!-- User profile -->
+                        <div class="row">
+                            <div class="col-lg-8">
+                                @title
+                            </div>
+
+                        </div>
+                            <!-- /user profile -->
+
+                    </div>
+                        <!-- /main content -->
+
+                </div>
+                    <!-- /page content -->
+
+            </div>
+                <!-- /page container -->
+
+
+
+            @partials._footer(user)
+
+
+        </body>
+
+
+    }

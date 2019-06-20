@@ -1,0 +1,11 @@
+@(userDTO: Option[User], paginatedResult: PaginatedResult[Article])(implicit request: RequestHeader, messages: Messages)
+
+
+<div class="panel text-center show_more_articles">
+    <div class="panel-body">
+        <input type="hidden" id="@paginatedResult.orderBy.concat("ArticlesPageNumber")" value="@paginatedResult.pageNumber" />
+
+        No more contents to show
+
+    </div>
+</div>

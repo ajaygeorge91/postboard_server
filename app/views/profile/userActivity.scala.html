@@ -1,0 +1,130 @@
+@(title: String, user: Option[User], userProfile: User, paginatedResultUserActivity: PaginatedResult[UserActivity])(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+    <!-- User scripts -->
+
+
+} {
+
+
+    <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(user)
+
+        @partials._titleHeader(user, userProfile.fullName.getOrElse(""))
+
+
+            <!-- Page container -->
+        <div class="page-container custom_page_container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+
+                        <!-- User profile -->
+                    <div class="row">
+                        <div class="col-lg-8">
+
+                                <!-- Timeline -->
+                            <div class="timeline timeline-left">
+                                <div class="timeline-container">
+
+
+                                @paginatedResultUserActivity.result.map { item =>
+
+                                    <!-- Blog post -->
+                                    <div class="timeline-row">
+                                        <div class="timeline-icon">
+                                            <div class="bg-info-400">
+                                                @if(item.nodeLabel.equalsIgnoreCase("article")) {
+                                                    <i class="icon-image2"></i>
+                                                } @if(item.nodeLabel.equalsIgnoreCase("comment")) {
+                                                <i class="icon-comment-discussion"></i>
+                                            }
+                                            </div>
+                                        </div>
+
+
+                                        <div class="panel panel-flat timeline-content">
+                                            <div class="panel-heading">
+                                                <h6 class="panel-title">Daily statistics</h6>
+                                                <div class="heading-elements">
+                                                    <span class="heading-text"><i class="icon-history position-left text-success"></i>
+                                                        Updated 3 hours ago</span>
+
+                                                    <ul class="icons-list">
+                                                        <li><a data-action="reload"></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel-body">
+
+                                                @item.article.map { a =>
+                                                    @a.toString
+                                                }
+                                                @item.comment.map { c =>
+
+                                                        <blockquote>
+                                                            <p>@c.content.getOrElse("")</p>
+                                                            <footer>Jason, <cite title="Source Title">10:39 am</cite></footer>
+                                                        </blockquote>
+
+                                                }
+
+                                                @item.userActivityList.toString
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- /blog post -->
+
+                                }
+
+
+                                </div>
+                            </div>
+                                <!-- /timeline -->
+
+                        </div>
+
+
+                        <div class="col-lg-4">
+
+                        @partials._profileNav(user, userProfile)
+
+                        </div>
+                    </div>
+                        <!-- /user profile -->
+
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+
+
+        @partials._footer(user)
+
+
+    </body>
+
+
+}

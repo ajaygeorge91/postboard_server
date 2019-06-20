@@ -1,0 +1,139 @@
+@(title: String, user: Option[User], article: Article, paginatedResultComment: PaginatedResult[Comment], linkedComment: Option[Comment] = None)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+    <meta name="description" content=@article.content.getOrElse(article.title.getOrElse(utils.Constants.DOMAIN))>
+    <meta property='og:type' content='article' />
+    <meta property="og:title" content="@article.title.getOrElse(article.content.getOrElse(utils.Constants.DOMAIN))" />
+    <meta property="og:description" content=@article.content.getOrElse(article.title.getOrElse(utils.Constants.APP_NAME))>
+
+    @article.image.map { img =>
+        <meta property="og:image" content="@img.imageURL.getOrElse(utils.Constants.DOMAIN)" />
+        <meta name="medium" content="image" />
+    }
+    @article.createdBy.map { u =>
+        <meta property='article:author' content='@u.fullName.getOrElse(utils.Constants.APP_NAME)' />
+    }
+
+        <!-- User scripts -->
+
+} {
+
+    <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(user)
+
+        @partials._titleHeader(user, "Detail")
+
+
+            <!-- Page container -->
+        <div class="page-container custom_page_container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+
+                    <div class="row">
+                        <div class="col-lg-7 col-md-8 main_column" id="artList">
+
+
+                            <div id="contentList">
+
+                            @articles._article(user, article)
+
+                            </div>
+
+                                <!-- Comments -->
+                            <div class="panel panel-flat custom_panel">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title text-semiold"><i class="icon-bubbles4 position-left"></i>
+                                        Comments</h5>
+
+                                </div>
+
+                                <div class="panel-body">
+
+                                    <div class="media">
+                                        <div class="media-left pr-10">
+                                            <a href="#"><img src="@user.map(u => u.avatarURL.getOrElse(utils.Constants.DEFAULT_AVATAR))" class="img-circle img-sm" alt=""></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <textarea id="comment_text" style="resize: none" name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+
+                                            <ul class="list-inline list-inline-separate text-size-small pull-right">
+                                                <button id="@article.id" type="button" class="comment_submit btn btn-xs bg-slate">
+                                                    COMMENT</button>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                    <ul id="commentList" class="media-list content-group-lg">
+
+
+                                        @linkedComment.map { c =>
+                                            <span class="label bg-slate">LINKED COMMENT</span>
+                                            @articles._comment(user, c)
+                                        }
+
+                                        @articles._commentList(user, paginatedResultComment.copy(result = paginatedResultComment.result.filterNot(f => linkedComment.getOrElse(Comment("")).id == f.id)))
+
+
+                                    </ul>
+
+                                    @articles._commentShowMore(user, paginatedResultComment)
+
+
+                                </div>
+                            </div>
+                                <!-- /comments -->
+
+
+                        </div>
+
+
+                        <div class="col-lg-5 col-md-4 secondary_column">
+                            <ul class="media-list media-list-linked bg-white">
+
+                                <li class="media">
+                                    <a href="@article.createdBy.map(u => routes.UserController.profile(u.id)).getOrElse("#")" class="media-link">
+                                        <div class="media-left">
+                                            <img src="@article.createdBy.map(u => u.avatarURL.getOrElse(utils.Constants.DEFAULT_AVATAR))" class="img-circle img-md" alt="">
+                                        </div>
+
+                                        <div class="media-body media-left" style="vertical-align: middle">
+                                            <div class="text-bold" >@article.createdBy.map(u => u.fullName.getOrElse("")) </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+
+        @partials._footer(user)
+
+
+    </body>
+
+
+}

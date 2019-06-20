@@ -1,0 +1,271 @@
+
+.like {
+    background-color: #fcfcfc;
+}
+
+.like:hover {
+    background-color: rgba(121, 140, 203, 0.5);
+}
+
+.liked {
+    background-color: #798ccb;
+}
+
+.dislike {
+    background-color: #fcfcfc;
+}
+
+.dislike:hover {
+    background-color: rgba(121, 140, 203, 0.51);
+}
+
+.disliked {
+    background-color: #798ccb;
+}
+
+.status_control {
+}
+
+.comment_submit {
+}
+
+.displaynone {
+    display: none;
+}
+
+.comment_status_control {
+}
+
+.comment_like {
+    color: #4CAF50;
+}
+
+.comment_like:hover {
+    color: #00cd00;
+    background: gainsboro;
+}
+
+.comment_liked {
+    color: #00cd00;
+    background: gainsboro;
+}
+
+.comment_dislike {
+    color: #F44336;
+}
+
+.comment_dislike:hover {
+    color: #cd0000;
+    background: gainsboro;
+}
+
+.comment_disliked {
+    color: #cd0000;
+    background: gainsboro;
+}
+
+.body_override {
+    background-color: #f5f5f5;
+}
+
+.comment_view {
+    background-color: #f8f8f8;
+}
+
+.page-header .page-header-default {
+    background-color: #fdfdfd;
+    box-shadow: 0 1px 0 0 #f9f9f9
+}
+
+.sidebar-default .sidebar-content {
+    border-color: #fdfdfd;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 0 rgb(245, 245, 245);
+    border-radius: 0;
+}
+
+.custom_panel_no_border {
+    border-color: #fdfdfd !important;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 0 rgb(245, 245, 245);
+    border-radius: 0;
+}
+
+.custom_panel {
+    border-color: #fafafa;
+    box-shadow: 0 3px 6px rgb(245, 245, 245);
+    border-radius: 2px;
+}
+
+.post {
+    width: 100%;
+    min-width: 250px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-color: #fafafa;
+    box-shadow: 0 3px 6px rgb(245, 245, 245);
+    border-radius: 2px;
+}
+
+.user_div {
+    background-color: #ffffff;
+    border-bottom: 1px solid #fafafa;
+}
+
+.status_bar_div {
+    margin-top: 5px;
+    background-color: #fcfcfc;
+    border-top: 1px solid #fafafa;
+}
+
+
+.footer_item {
+    margin: 2px;
+    padding: 2px;
+}
+
+.secondary_column {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.main_column {
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+
+.custom_panel-body {
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.custom_content_panel-body {
+    padding-top: 0;
+}
+
+.text_title {
+    color: #545454;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.text_area_form {
+    resize: vertical;
+}
+
+.text_padding {
+    padding: 10px 20px;
+}
+
+.text_content {
+    color: #545454;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.provider_favicon {
+    vertical-align: sub;
+    margin-right: 4px;
+}
+
+.text_link {
+    color: #1a0dab;
+    font-size: 13px;
+}
+
+.image_upload_preview {
+    display: block;
+    min-height: 50px;
+    background: #eee;
+}
+
+.max_lines_2 {
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.max_lines_4 {
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.custom_nav_bar_img {
+    height: 46px;
+}
+
+.has_bg_image {
+    background-image: url(../images/logo1.png);
+}
+
+.image_modal {
+    background: transparent;
+    padding: 0;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.sub_comment_list {
+    max-height: 70vh;
+    overflow: auto;
+    /*overflow-y: auto;*/
+}
+
+.modal_close {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.img-container_custom {
+    position: relative;
+    padding-top: 66.59%;
+}
+
+.img_custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.img_xxs {
+    width: 24px !important;
+    height: 24px !important
+}
+
+@media (max-width: 480px) {
+    .custom_page_container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .secondary_column {
+        margin: 0 auto 20px;
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+
+    .main_column {
+        margin: 0 auto 20px;
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+
+}
+
+

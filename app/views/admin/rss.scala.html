@@ -1,0 +1,118 @@
+@(rssUserList: List[User], createGroupForm: Form[forms.AddUrlForm.Data])(implicit request: RequestHeader, messages: Messages)
+
+    @import helper._
+
+    @main("rss") {
+        <!-- User scripts -->
+
+
+    } {
+
+
+        <body class="layout-boxed navbar-bottom body_override">
+
+                <!-- Page container -->
+            <div class="page-container">
+
+                    <!-- Page content -->
+                <div class="page-content">
+
+                        <!-- Main content -->
+                    <div class="content-wrapper">
+
+                            <!-- Simple panel -->
+                        <div class="panel panel-flat col-lg-8 main_column">
+
+                            <div class="row">
+
+                                <div class="panel-heading">
+                                    <h5 class="panel-title">rss_users</h5>
+                                </div>
+
+                                @rssUserList.map { user =>
+
+                                    <!-- Simple panel -->
+                                    <div class="panel panel-flat col-lg-10 main_column">
+
+                                        <div class="panel-body">
+
+                                            <div class="panel-heading custom_panel-body">
+                                                @user.id
+                                            </div>
+                                            <div class="panel-heading custom_panel-body">
+                                            @user.fullName.getOrElse("")
+                                            </div>
+                                            <div class="panel-heading custom_panel-body">
+                                            @user.userProfile.map { up =>
+                                                @up.rssUrl.getOrElse("_")
+                                            }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /simple panel -->
+                                }
+
+                                <div class="panel panel-flat col-lg-10 main_column">
+
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">add new</h5>
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                    @helper.form(action = controllers.routes.AdminController.rssPost(), 'enctype -> "multipart/form-data") {
+                                        @helper.CSRF.formField
+
+                                        <div class="" id="artList">
+                                            <div class="form-horizontal">
+
+                                                <div class="panel-heading custom_panel-body" >
+                                                    <h6 class="panel-title text-semibold">
+                                                        <input type="text" id="url" name="url" placeholder="url" class="form-control">
+                                                    </h6>
+                                                </div>
+                                                <div class="panel-heading custom_panel-body" >
+                                                    <h6 class="panel-title text-semibold">
+                                                        <input type="text" id="name" name="name" placeholder="name" class="form-control">
+                                                    </h6>
+                                                </div>
+
+                                                @createGroupForm.errors.map { msg =>
+                                                    <div class="col-md-6 col-md-offset-3 alert alert-danger alert-error">
+                                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                                        <strong>@msg.key</strong> @Messages(msg.message)
+                                                    </div>
+                                                }
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                        <!-- /main content -->
+
+                </div>
+                    <!-- /page content -->
+
+            </div>
+                <!-- /page container -->
+
+
+        </body>
+
+
+    }

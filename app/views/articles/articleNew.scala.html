@@ -1,0 +1,179 @@
+@(createPostForm: Form[forms.CreateArticleForm.Data], createPostFromLinkForm: Form[forms.CreateArticleFromLinkForm.Data], title: String, user: User)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@main(title) {
+    <!-- User scripts -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="@routes.Assets.versioned("js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js")"></script>
+
+    <script type="text/javascript" src="@routes.Assets.versioned("js/plugins/forms/inputs/autosize.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.versioned("js/pages/form_controls_extended.js")"></script>
+        <!-- /theme JS files -->
+
+
+} {
+
+
+    <body class="layout-boxed navbar-bottom body_override" data-ws-url-admin-dashboard="@controllers.routes.ApplicationController.dashBoardSocket().webSocketURL()">
+
+
+        @partials._navbarMain(Some(user))
+
+        @partials._titleHeader(Some(user), "New Post")
+
+
+            <!-- Page container -->
+        <div class="page-container">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                @partials._sidebarMain()
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <div class="row">
+
+
+                            <!-- Simple panel -->
+                        <div class="col-lg-7 col-md-8 main_column">
+
+
+                            <div class="tabbable ">
+                                <ul class="nav nav-tabs nav-tabs-bottom">
+                                @if(createPostFromLinkForm.errors.isEmpty) {
+                                    <li class="active"><a href="#bordered-tab1" data-toggle="tab"><i class="icon-newspaper position-left"></i>
+                                        Post</a></li>
+                                    <li><a href="#bordered-tab2" data-toggle="tab">Link</a></li>
+                                } else {
+                                    <li><a href="#bordered-tab1" data-toggle="tab"><i class="icon-link position-left"></i>
+                                        Post</a></li>
+                                    <li class="active"><a href="#bordered-tab2" data-toggle="tab">Link</a></li>
+                                }
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane  @if(createPostFromLinkForm.errors.isEmpty) {active}" id="bordered-tab1">
+
+                                    @helper.form(action = controllers.routes.ArticleController.create(), 'enctype -> "multipart/form-data", 'id -> "add_post_form") {
+                                        @helper.CSRF.formField
+
+                                        @createPostForm.errors.map { msg =>
+                                            <div class="col-md-6 col-md-offset-3 alert alert-danger alert-error">
+                                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                                <strong>@msg.key</strong> @Messages(msg.message)
+                                            </div>
+                                        }
+
+                                        <div class="bg-white">
+                                            <div class="form-horizontal ">
+
+
+                                                <div class="content-group no-padding no-margin" >
+
+                                                    <div class="form-group no-padding no-margin">
+                                                        <textarea id="content" name="content" placeholder="Content" class="form-control elastic text_content no-border text_area_form"></textarea>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="thumb content-group">
+                                                    <div class=" image_upload_preview">
+                                                        <img id="image_upload_preview" src="" alt="" class="img-responsive">
+                                                    </div>
+                                                    <div class="caption-overflow">
+                                                        <span>
+                                                            <input id="inputFile" type="file" name="image" class=" file-input btn border-white text-white btn-flat btn-icon btn-rounded center-block">
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer  no-padding pt-20">
+                                            <button type="submit" class="btn btn-primary btn-sm bg-slate">
+                                                Submit</button>
+                                        </div>
+
+
+                                    }
+
+                                    </div>
+
+                                    <div class="tab-pane  @if(createPostFromLinkForm.errors.nonEmpty) {active}" id="bordered-tab2">
+
+                                    @helper.form(action = controllers.routes.ArticleController.createFromLink(), 'enctype -> "multipart/form-data") {
+                                        @helper.CSRF.formField
+
+                                        <div class="bg-white">
+                                            <div class="form-horizontal">
+
+                                                <div class="content-group no-padding no-margin" >
+
+                                                    <div class="form-group no-padding no-margin">
+                                                        <input type="text" id="link" name="link" placeholder="URL" class="form-control  elastic text_content no-border text_area_form">
+                                                    </div>
+
+                                                </div>
+
+
+                                                @createPostFromLinkForm.errors.map { msg =>
+                                                    <div class="col-md-6 col-md-offset-3 alert alert-danger alert-error">
+                                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                                        <strong>@msg.key</strong> @Messages(msg.message)
+                                                    </div>
+                                                }
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer  no-padding pt-20">
+                                            <button type="submit" class="btn btn-primary btn-sm bg-slate">
+                                                Submit</button>
+                                        </div>
+
+                                    }
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="m-20"></div>
+
+                        </div>
+                            <!-- /simple panel -->
+
+                        <div class="col-lg-5  col-md-4 secondary_column">
+
+
+                        @partials._profileNav(Some(user), user)
+                        </div>
+                    </div>
+
+
+                    <div class="m-20"></div>
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+        @partials._footer(Some(user))
+
+
+    </body>
+
+
+}

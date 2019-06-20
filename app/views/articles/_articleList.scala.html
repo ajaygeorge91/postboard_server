@@ -1,0 +1,10 @@
+@(userDTO: Option[User], paginatedResult: PaginatedResult[Article])(implicit request: RequestHeader, messages: Messages)
+
+
+
+    @paginatedResult.result.map { article =>
+        @articles._article(userDTO, article)
+    }
+
+
+

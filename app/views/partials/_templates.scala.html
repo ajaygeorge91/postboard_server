@@ -1,0 +1,82 @@
+<div >
+
+    <script id="commentReplyInputTemplate" type="text/x-mustache">
+    <div class="media">
+    <div class="media-left pr-10">
+    <img src="{{avatarURL}}" class="img-circle img-sm" alt="">
+    </div>
+    <div class="media-body">
+    <textarea id="{{commentID}}_subCommentText" style="resize: none" name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+    <ul class="text-size-small pull-right"><div class="btn-group-xs">
+    <button id="{{commentID}}" type="button" class="sub_comment_cancel btn btn-link">CANCEL</button>
+    <button id="{{commentID}}" type="button" class="sub_comment_submit btn btn-xs bg-teal-400">COMMENT</button>
+    </div>
+    </ul>
+    </div>
+    </div>
+    </script>
+
+
+    <script id="userNotificationListTemplate" type="text/x-mustache">
+    {{#data}}
+
+    <li class="media"> <a href="{{link}}" class="media-link">
+
+    <div class="media-left">
+    <img  src="{{imageThumb}}" class="img-circle img-sm">
+    </div>
+    <div class="media-body"><span class="media-heading max_lines_2"> {{content}} </span>
+    <span class="media-annotation max_lines_2">{{subContent}}</span>
+    </div>
+    </a> </li>
+
+    {{/data}}
+    </script>
+
+
+    <script id="modalCommentEditContentTemplate" type="text/x-mustache">
+    <div class="media"> <div class="media-left pr-10"> <img src="{{avatarURL}}" class="img-circle img-sm" alt=""> </div>
+    <div class="media-body">
+    <textarea id="{{commentID}}_edited_content" style="resize: none" name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message...">{{content}}</textarea>
+    <ul class="text-size-small pull-right"><div class="btn-group-xs">
+    <button type="button" data-dismiss="modal" class="btn btn-link">CANCEL</button>
+    <button id="{{commentID}}" type="button" class="comment_edit_submit btn btn-xs bg-teal-400">COMMENT</button>
+    </div>
+    </ul>
+    </div>
+    </div>
+    </script>
+</div>
+
+
+
+
+
+
+    <!-- Image modal -->
+<div id="modal_image_full_screen" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content image_modal">
+            <div class="modal-body no-padding">
+                <div class="thumb">
+                    <img id="modal_image_full_screen_src" src="" alt="Loading...">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="close modal_close" data-dismiss="modal">&times;</button>
+</div>
+    <!-- /basic modal -->
+
+
+    <!-- Comment edit modal -->
+<div id="modal_comment_edit" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body" id="modal_comment_edit_content" >
+
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- /basic modal -->

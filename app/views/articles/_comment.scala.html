@@ -1,0 +1,58 @@
+@(userDTO: Option[User], comment: Comment)(implicit request: RequestHeader)
+
+<li class="media comment_wrapper" id="@comment.id.concat("_wrapper")">
+    <div class="media-left pr-10">
+        <img src="@comment.createdBy.map(u => u.avatarURL.getOrElse(utils.Constants.DEFAULT_AVATAR))" class="img-circle img-sm" alt="">
+    </div>
+
+    <div class="media-body">
+        <div class="media-heading">
+            <a href="#" class="text-semibold">@comment.createdBy.map(u => u.fullName.getOrElse(""))</a>
+            <span class="media-annotation dotted">@utils.WebUtils.getDisplayTimeOffset(comment.createdAt)</span>
+        </div>
+
+        <p id="@comment.id.concat("_content")">@comment.content.map(c => c)</p>
+
+
+        @defining(comment.userCommentActivity.getOrElse(UserCommentActivity.getNone).rating.getOrElse(0)) { rating =>
+
+
+            <div class="displaynone" id="@comment.id.concat("_rating")">@rating</div>
+            <ul class="comment_status_control list-inline list-inline-separate text-size-small">
+                <li><a class="commentReplyButton" id="@comment.id">Reply</a></li>
+                <li class="ml-5 mr-5">
+                    <small id="@comment.id.concat("_ratingSum")">
+                    @comment.commentMeta.map(m => m.ratingSum.getOrElse(0)).getOrElse(0)
+                    </small>
+
+                    <a><i id="@comment.id.concat("_like")" class="ml-5 label-rounded icon-arrow-up22 @{
+                        if(rating == 1) "comment_liked" else "comment_like"
+                    }"></i></a>
+                    <a><i id="@comment.id.concat("_dislike")" class="ml-5 label-rounded icon-arrow-down22 @{
+                        if(rating == -1) "comment_disliked" else "comment_dislike"
+                    }"></i></a>
+                </li>
+                @userDTO.map { onlineUser => comment.createdBy.map{u => if(u.id.equals(onlineUser.id)) {
+                    <li><a id="@comment.id" class="commentEditLink" data-toggle="modal" data-target="#modal_comment_edit" data-comment-id="@comment.id">
+                        Edit</a></li>
+                    }}
+                }
+
+            </ul>
+
+            <div class="comment_reply_input_field mt-20" id="@comment.id.concat("_replyInput")"></div>
+
+            <div class="sub_comment_list" id="@comment.id.concat("_subCommentList")">
+
+
+                @comment.subCommentListP.map(sc => articles._subCommentList(userDTO, sc))
+
+                @comment.subCommentListP.map(sc => articles._subCommentShowMore(userDTO, sc, comment.id))
+
+            </div>
+
+
+        }
+
+    </div>
+</li>

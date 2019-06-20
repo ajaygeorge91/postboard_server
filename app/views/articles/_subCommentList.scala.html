@@ -1,0 +1,10 @@
+@(userDTO: Option[User], subCommentList: PaginatedResult[SubComment])(implicit request: RequestHeader)
+
+
+    @subCommentList.result.map { sc =>
+
+        @articles._subComment(userDTO, sc)
+
+    }
+
+

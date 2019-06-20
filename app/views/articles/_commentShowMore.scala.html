@@ -1,0 +1,13 @@
+@(userDTO: Option[User], paginatedResult: PaginatedResult[Comment])(implicit request: RequestHeader, messages: Messages)
+
+
+<div class="text-center show_more_comments">
+    <div class="panel-body">
+        <input type="hidden" id="@paginatedResult.orderBy.concat("CommentsPageNumber")" value="@paginatedResult.pageNumber" />
+
+        <button type="button" id="@paginatedResult.orderBy.concat("ShowMoreComments")" class="btn btn-default btn-ladda btn-ladda-spinner" data-spinner-color="#333" data-style="slide-up"><span class="ladda-label">
+            Show more</span>
+        </button>
+
+    </div>
+</div>

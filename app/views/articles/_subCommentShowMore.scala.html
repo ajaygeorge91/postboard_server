@@ -1,0 +1,11 @@
+@(userDTO: Option[User], paginatedResult: PaginatedResult[SubComment], commentID: String)(implicit request: RequestHeader)
+
+@if(paginatedResult.numberOfRecords > 0 && paginatedResult.totalCount > paginatedResult.numberOfRecords) {
+    <div class="text-center show_more_sub_comments">
+        <div class="panel-body">
+            <a id="@commentID" class="@paginatedResult.orderBy.concat("ShowMoreSubComments")" data-spinner-color="#333" data-style="slide-up"><span class="ladda-label">
+                Show all @paginatedResult.totalCount replies</span>
+            </a>
+        </div>
+    </div>
+}

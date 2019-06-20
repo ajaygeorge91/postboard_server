@@ -1,0 +1,9 @@
+@(userDTO: Option[User], commentList: PaginatedResult[Comment])(implicit request: RequestHeader)
+
+
+
+@commentList.result.map { comment =>
+    @articles._comment(userDTO, comment)
+}
+
+

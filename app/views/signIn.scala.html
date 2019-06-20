@@ -1,0 +1,174 @@
+@(signInForm: Form[forms.SignInForm.Data], signUpForm: Form[forms.SignUpForm.Data], socialProviders: com.mohiva.play.silhouette.impl.providers.SocialProviderRegistry)(implicit request: RequestHeader, messages: Messages)
+
+@import com.mohiva.play.silhouette.impl.providers.oauth2.ClefProvider
+
+@main("SignIn | PostBoard") {
+    <!-- User scripts -->
+} {
+
+
+    <body class="login-container login-cover">
+
+            <!-- Page container -->
+        <div class="page-container pb-20">
+
+                <!-- Page content -->
+            <div class="page-content">
+
+                    <!-- Main content -->
+                <div class="content-wrapper">
+
+                    @request.flash.get("error").map { msg =>
+                        <div class="col-md-6 col-md-offset-3 alert alert-danger alert-error">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>@Messages("error")</strong> @msg
+                        </div>
+                    }
+
+                        <!-- Tabbed form -->
+                    <div class="tabbable panel login-form width-400">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>Sign in</h6></a></li>
+                            <li><a href="#basic-tab2" data-toggle="tab"><h6>Register</h6></a></li>
+                        </ul>
+
+                        <div class="tab-content panel-body">
+                            <div class="tab-pane fade in active" id="basic-tab1">
+                                @helper.form(action = controllers.routes.CredentialsAuthController.authenticate()) {
+                                    @helper.CSRF.formField
+
+                                    <div class="text-center">
+                                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                                        <h5 class="content-group">
+                                            Login to your account <small class="display-block">
+                                            Your credentials</small></h5>
+                                    </div>
+
+
+                                    <div class="form-group has-feedback has-feedback-left">
+                                        <input type="email" id="email" name="email" value="" class="form-control input-lg" placeholder="Email">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user text-muted"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback has-feedback-left">
+
+                                        <input type="password" id="password" name="password" value="" class="form-control input-lg" placeholder="Password">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-lock2 text-muted"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group login-options">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="rememberMe" name="rememberMe" value="true" checked="true">
+                                                    Remember
+                                                </label>
+                                            </div>
+
+                                            <div class="col-sm-6 text-right">
+                                                <a href="#">Forgot password?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn bg-blue btn-block">
+                                            Login <i class="icon-arrow-right14 position-right"></i></button>
+                                    </div>
+
+                                }
+
+
+
+                                <div class="content-divider text-muted form-group"><span>or sign in with</span></div>
+                                <ul class="list-inline form-group list-inline-condensed text-center">
+                                    <li><a href="@routes.SocialAuthController.authenticate("facebook")" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded"><i class="icon-facebook"></i></a></li>
+                                    <li><a href="@routes.SocialAuthController.authenticate("google")" class="btn border-danger text-danger btn-flat btn-icon btn-rounded"><i class="icon-google"></i></a></li>
+                                </ul>
+
+                                <span class="help-block text-center no-margin">
+                                    By continuing, you're confirming that you've read our <a href="#">
+                                    Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+                            </div>
+
+                            <div class="tab-pane fade" id="basic-tab2">
+
+                            @helper.form(action = controllers.routes.SignUpController.signUp()) {
+                                @helper.CSRF.formField
+                                <div class="text-center">
+                                    <div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>
+                                    <h5 class="content-group">Create new account <small class="display-block">
+                                        All fields are required</small></h5>
+                                </div>
+
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="text" id="fullName" name="fullName" value="" class="form-control input-lg" placeholder="Full name">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user-check text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="email" id="email" name="email" value="" class="form-control input-lg" placeholder="Email">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-mention text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="password" id="password" name="password" value="" class="form-control input-lg" placeholder="Password">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user-lock text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="content-divider text-muted form-group"><span>Additions</span></div>
+
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="styled" checked="checked">
+                                            Accept <a href="#">terms of service</a>
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="styled">
+                                            Subscribe to newsletter
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn bg-indigo-400 btn-block">
+                                    Register <i class="icon-circle-right2 position-right"></i></button>
+
+                            }
+
+
+                            </div>
+                        </div>
+                    </div>
+                        <!-- /tabbed form -->
+
+                </div>
+                    <!-- /main content -->
+
+            </div>
+                <!-- /page content -->
+
+        </div>
+            <!-- /page container -->
+
+    </body>
+
+
+}
+
+
+
+

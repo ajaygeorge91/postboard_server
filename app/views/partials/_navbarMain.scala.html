@@ -1,0 +1,97 @@
+@(userDTO: Option[User])(implicit request: RequestHeader, messages: Messages)
+
+
+<!-- Main navbar -->
+<div class="navbar navbar-inverse">
+
+    <div class="navbar-boxed">
+
+        <div class="row">
+            <div class="navbar-header">
+                <a class="navbar-brand no-padding" href="@controllers.routes.ApplicationController.index()">
+                    <div class="pl-15">
+                        <img class="custom_nav_bar_img" src="@routes.Assets.versioned("images/logo_light.png")" alt="">
+                    </div>
+                </a>
+
+                <ul class="nav navbar-nav pull-right visible-xs-block">
+                    <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                    <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    @*<li id="dropdown" class="pr-15">*@
+                        @*<div id="navbar-form-icons ">*@
+                            @*<form class="navbar-form">*@
+                                @*<div class="form-group has-feedback">*@
+                                    @*<input type="search" class="form-control" placeholder="Search field">*@
+                                    @*<div class="form-control-feedback">*@
+                                        @*<i class="icon-search4 text-muted text-size-base"></i>*@
+                                    @*</div>*@
+                                @*</div>*@
+                            @*</form>*@
+                        @*</div>*@
+                    @*</li>*@
+
+                    @userDTO.map { u =>
+
+
+                    <li class="dropdown">
+                        <a href="#" id="userNotificationIcon" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-bell2"></i>
+                            <span class="visible-xs-inline-block position-right">Notifications</span>
+                            <span class="badge bg-warning-400" id="user_notification_count"></span>
+                        </a>
+
+
+                        <div class="dropdown-menu dropdown-content">
+                            <div class="dropdown-content-heading">
+							    Notifications
+                            </div>
+
+                            <ul class="media-list media-list-linked media-list-bordered dropdown-content-body no-padding width-350" id="user_notification_list">
+
+
+                            </ul>
+
+                            <div class="dropdown-content-footer">
+                                <a href="@routes.UserController.notifications(u.id)" data-popup="tooltip" title="Show all notifications"><i class="icon-menu display-block"></i></a>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="dropdown dropdown-user">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <img id="avatarURL" src="@u.avatarURL.getOrElse(utils.Constants.DEFAULT_AVATAR)" alt="">
+                            <span>@u.fullName.getOrElse("")</span>
+                            <i class="caret"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="@controllers.routes.UserController.profile(u.id)"><i class="icon-user-plus"></i>
+                                My profile</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                            <li><a href="@controllers.routes.ApplicationController.signOut()"><i class="icon-switch2"></i>
+                                Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    }.getOrElse {
+                        <li><a href="@controllers.routes.ApplicationController.signIn()"><i class="icon-user-plus"></i>
+                            Login</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <!-- /main navbar -->

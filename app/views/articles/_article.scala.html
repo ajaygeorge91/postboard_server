@@ -1,0 +1,114 @@
+@import utils.Constants
+@(userDTO: Option[User], article: Article)(implicit request: RequestHeader, messages: Messages)
+
+
+<div class="panel post" id="@article.id.concat("_wrapper")" xmlns="http://www.w3.org/1999/html">
+
+    <div class="panel-body p-5 user_div">
+
+        <div class="row ml-10 mr-10 mt-5 mb-5">
+            <div class="col-sm-12 pl-5 pr-5 ">
+
+                @article.createdBy.map { u =>
+                    <a href="@routes.UserController.profile(u.id)">
+                        <span class="media-content"><img src="@u.avatarURL.getOrElse(Constants.DEFAULT_AVATAR)" class="img-circle img-xs img_xxs"/>
+                            <b class="text-semibold ml-10 center text_link">@u.fullName.getOrElse("")</b>
+                        </span>
+                    </a>
+                }
+            <i class="media-annotation pull-right"> <i class="icon-history position-left"></i>
+                <i id="@article.createdAt.getOrElse("")" class="time_offset">@utils.WebUtils.getDisplayTimeOffset(article.createdAt)</i>
+            </i>
+            </div>
+        </div>
+    </div>
+
+    @article.image.map { img =>
+        <div class="thumb">
+            <div class="img-container_custom" style="padding-top:@img.heightByWidth.getOrElse(0.0).toString.concat("%")">
+                @*<div class="img-container_custom" style="padding-top: 10%">*@
+                <img src="@img.imageURL.getOrElse("")" class="img_custom" onerror='imgError(this);'>
+            </div>
+            <div class="zoom-image_custom">
+                <i data-toggle="modal" data-target="#modal_image_full_screen" data-image-url="@img.imageURL.getOrElse("")" class="icon-zoomin3"></i>
+            </div>
+        </div>
+    }
+
+    @article.title.map { titleString =>
+        <div class="panel-heading text_padding">
+            <p class="panel-title text-regular text_title @if(!request.path.equalsIgnoreCase(controllers.routes.ArticleController.details(article.id, None).toString)) {max_lines_2}">
+            @titleString
+            </p>
+        </div>
+    }
+
+    @article.content.map { contentString =>
+        <div class="panel-body text_padding @{
+            if(article.title.nonEmpty) "no-padding-top"
+        }">
+
+            <p class="text-regular text_content @if(!request.path.equalsIgnoreCase(controllers.routes.ArticleController.details(article.id, None).toString)) {max_lines_4}">
+            @contentString </p>
+        </div>
+    }
+
+    @article.link.map { urlString =>
+        <div class="panel-body text_padding @{
+            if(article.title.nonEmpty || article.content.nonEmpty) "no-padding-top"
+        }">
+            <p class="text-regular text_content no-margin-top">
+                <a class="text_link" href="@urlString"><img src="@utils.LinkUtils.getFavIco(urlString)" width="14" height="14" class="provider_favicon">@utils.LinkUtils.cannonicalPage(urlString)</a>
+            </p>
+
+        </div>
+    }
+
+    <div class="status_bar_div">
+
+        <div class="row mr-5 ml-5">
+            <div class="col-xs-6">
+            @defining(article.userArticleActivity.getOrElse(UserArticleActivity.getNone).rating.getOrElse(0)) { rating =>
+
+                <div style="display: flex" class="status_control">
+                    <div class="displaynone" id="@article.id.concat("_rating")">@rating</div>
+                    <div class="footer_item">
+                        <button id="@article.id.concat("_like")" type="button" class="btn heading-btn btn-rounded btn-xs @{
+                            if(rating == 1) "liked" else "like"
+                        }"><b><i class="icon-thumbs-up2"></i></b> </button>
+                    </div>
+                    <div class="footer_item">
+                        <button id="@article.id.concat("_dislike")" type="button" class="btn heading-btn btn-rounded btn-xs @{
+                            if(rating == -1) "disliked" else "dislike"
+                        }"><b><i class="icon-thumbs-down2"></i></b></button>
+                    </div>
+                    <div class="footer_item">
+                        <p class="heading-btn btn-rounded btn-xs no-margin" id="@article.id.concat("_ratingSum")">
+                        @article.articleMeta.map(m => m.ratingSum.getOrElse(0)).getOrElse(0)
+                        </p>
+                    </div>
+                </div>
+            }
+
+            </div>
+
+            @if(!request.path.equalsIgnoreCase(controllers.routes.ArticleController.details(article.id, None).toString)) {
+                <a href="@controllers.routes.ArticleController.details(article.id, None)">
+                }
+            <div class="col-xs-6 center">
+                <div class="pull-right footer_item" style="display: flex ;">
+                    <b class="heading-btn btn-rounded btn-xs"><i class="icon-comment-discussion"></i></b>
+                    <p class="heading-btn btn-rounded btn-xs no-margin" id="@article.id.concat("_commentSum")">
+                    @article.articleMeta.map(m => m.commentCount.getOrElse(0)).getOrElse(0)
+                    </p>
+                </div>
+            </div>
+            @if(!request.path.equalsIgnoreCase(controllers.routes.ArticleController.details(article.id, None).toString)) {
+            </a>
+            }
+
+        </div>
+    </div>
+
+</div>
+
