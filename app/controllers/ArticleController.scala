@@ -50,7 +50,7 @@ class ArticleController @Inject()(
       form => Future.successful(BadRequest(views.html.articles.articleNew(form, forms.CreateArticleFromLinkForm.form, form.errorsAsJson.toString(), request.identity))),
       data => {
 
-        articleService.createArticle(Article.getNewArticlePost( data.content, imageKey_heightByWidth.map(f => f._1), imageKey_heightByWidth.map(f => f._2)), request.identity) map { a =>
+        articleService.createArticle(Article.getNewArticlePost(data.title, data.content, imageKey_heightByWidth.map(f => f._1), imageKey_heightByWidth.map(f => f._2)), request.identity) map { a =>
           Redirect(routes.ArticleController.details(a.id, None))
         }
       }

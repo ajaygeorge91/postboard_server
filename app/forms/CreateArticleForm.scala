@@ -14,12 +14,14 @@ object CreateArticleForm {
     */
   val form = Form(
     mapping(
-      "content" -> optional(text)
+      "content" -> optional(text),
+      "title" -> optional(text)
     )(Data.apply)(Data.unapply)
   )
 
   case class Data(
-                   content: Option[String]
+                   content: Option[String],
+                   title: Option[String]
                  )
 
 

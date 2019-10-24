@@ -41,11 +41,12 @@ object Article {
     )
   }
 
-  def getNewArticlePost(content: Option[String], imageKey: Option[String], heightByWidth: Option[Float]): Article = {
+  def getNewArticlePost(title: Option[String], content: Option[String], imageKey: Option[String], heightByWidth: Option[Float]): Article = {
     val now = DateTime.now().toString
     Article(
       id = UuidUtils.getUUID,
       articleType = Some(ARTICLE_TYPE_POST),
+      title = title.map(f => StringUtils.getTrimmedContent(f)),
       content = content.map(f => StringUtils.getTrimmedContent(f)),
       image = Image.getOptionalImage(imageKey, heightByWidth),
       createdAt = Some(now),

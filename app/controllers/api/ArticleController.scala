@@ -50,7 +50,7 @@ class ArticleController @Inject()(
           "success" -> false,
           "message" -> form.errorsAsJson.toString()))),
       data => {
-        articleService.createArticle(Article.getNewArticlePost(data.content, imageKey_heightByWidth.map(f => f._1), imageKey_heightByWidth.map(f => f._2)), request.identity) map { a =>
+        articleService.createArticle(Article.getNewArticlePost(data.title, data.content, imageKey_heightByWidth.map(f => f._1), imageKey_heightByWidth.map(f => f._2)), request.identity) map { a =>
           Ok(Json.obj(
             "success" -> true,
             "data" -> a

@@ -2,6 +2,7 @@ package modules
 
 
 
+
 import com.google.inject.name.Named
 import com.google.inject.{AbstractModule, Provides}
 import com.mohiva.play.silhouette.api.actions.SecuredErrorHandler
@@ -25,7 +26,7 @@ import com.mohiva.play.silhouette.password.BCryptPasswordHasher
 import com.mohiva.play.silhouette.persistence.daos.{DelegableAuthInfoDAO, InMemoryAuthInfoDAO}
 import com.mohiva.play.silhouette.persistence.repositories.DelegableAuthInfoRepository
 import models.daos._
-import models.services.{UserService, UserServiceImpl}
+import models.services.UserService
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import net.ceedubs.ficus.readers.EnumerationReader._
@@ -35,6 +36,8 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.ws.WSClient
 import utils.{MySecuredErrorHandler, MyUnSecuredErrorHandler}
 import utils.auth.{CookieEnv, JwtEnv}
+
+
 
 
 
@@ -49,7 +52,6 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     */
   def configure() {
 
-    bind[UserService].to[UserServiceImpl]
     bind[UserDAO].to[UserDAOImpl]
     bind[SecuredErrorHandler].to[MySecuredErrorHandler]
     bind[UnsecuredErrorHandler].to[MyUnSecuredErrorHandler]
@@ -63,7 +65,6 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     bind[EventBus].toInstance(EventBus())
     bind[Clock].toInstance(Clock())
 
-    bind[UserService].to[UserServiceImpl]
     bind[UserDAO].to[UserDAOImpl]
 
     bind[DelegableAuthInfoDAO[PasswordInfo]].to[PasswordInfoDAO]

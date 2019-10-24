@@ -4,7 +4,6 @@ import actors.{S3SenderActor, UserNotificationActor}
 import actors.bots._
 import com.google.inject.AbstractModule
 import models.daos._
-import models.services.{UserNotificationServiceImpl, _}
 import net.codingwell.scalaguice.ScalaModule
 import play.api.libs.concurrent.AkkaGuiceSupport
 
@@ -17,14 +16,6 @@ class AppModule extends AbstractModule with ScalaModule with AkkaGuiceSupport {
     * Configures the module.
     */
   def configure() {
-
-    bind[ArticleService].to[ArticleServiceImpl]
-    bind[CommentService].to[CommentServiceImpl]
-    bind[UserProfileService].to[UserProfileServiceImpl]
-    bind[UserNotificationService].to[UserNotificationServiceImpl]
-    bind[ImageService].to[ImageServiceImpl]
-    bind[SearchService].to[SearchServiceImpl]
-    bind[LinkParsingService].to[LinkParsingServiceImpl]
 
     bind[ArticleDAO].to[ArticleDAOImpl]
     bind[CommentDAO].to[CommentDAOImpl]
