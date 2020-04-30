@@ -1,17 +1,11 @@
 # postboard.online app
 
-This application is based on Silhouette seed Template: 
-
-https://github.com/mohiva/play-silhouette-seed
- 
  
 Install 
 	Neo4j for database access 
 	MQTT for real time messaging (preferably mosquitto)
 
 
- 
-export _JAVA_OPTIONS="-Xms128m -Xmx256m"
 sbt clean dist 
 
 
@@ -23,12 +17,6 @@ sudo nohup bash postboard_server -Dconfig.file=/home/ubuntu/prod/1/postboard_ser
 
 
 
-export _JAVA_OPTIONS="-Xms256m -Xmx256m"
-
-
-
-
-https://bitbucket.org/ajaygeorge7/postboard_server
 
 
 
